@@ -130,11 +130,8 @@ router.get('/' , async (req,res) =>{
         res.json(profiles); 
 
     }catch(error){
-
         consol.log(error.message);
         res.status(500).send('Server error'); 
-
-
     }
 
 })
