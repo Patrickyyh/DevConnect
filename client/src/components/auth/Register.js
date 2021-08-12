@@ -1,9 +1,10 @@
 import React , {Fragment, useState} from 'react'
 import  axios from 'axios';  
+import {Link,Redirect} from 'react-router-dom';
 
 // import Component
 import Alert from '../layout/Alert';
-
+import { register } from '../../actions/auth';
 
 // Redux
 import { connect } from 'react-redux';
@@ -26,7 +27,7 @@ import PropTypes from 'prop-types';
 
     const onChange = (e) => {
         setFormData({...formData,[e.target.name]: e.target.value})
-        
+
     }
 
     const onSubmit  = async (e) => {
@@ -34,9 +35,18 @@ import PropTypes from 'prop-types';
         if(password !== confirmPassword){
             props.setAlert('Passwords do not match','danger')
         }else{
-            
+            // Calling Register action creator
+            props.register({name,email,password});
+          
         }
     }
+
+
+    // Redirect if logged in 
+    if(props.isAuthenticated){
+      return <Redirect to ="/dashboard" /> 
+    }
+
 
     
     return (
@@ -48,13 +58,16 @@ import PropTypes from 'prop-types';
             <input type="text" 
                    placeholder="Name" 
                    name="name" 
-                   required  
+                  //  required  
                    value = {name}
                    onChange = {term => onChange(term)}/>
           </div>
           <div className="form-group">
-            <input type="email" placeholder="Email Address" name="email"  value = {email}
-                   onChange = {term => onChange(term)} required />
+            <input type="email" 
+                   placeholder="Email Address" 
+                   name="email"  value = {email}
+                   onChange = {term => onChange(term)} 
+                   /*required*/ />
             <small className="form-text"
               >This site uses Gravatar so if you want a profile image, use a
               Gravatar email</small
@@ -65,7 +78,6 @@ import PropTypes from 'prop-types';
               type="password"
               placeholder="Password"
               name="password"
-              minLength="6"
               value = {password}
               onChange = {term => onChange(term)}
             />
@@ -75,7 +87,6 @@ import PropTypes from 'prop-types';
               type="password"
               placeholder="Confirm Password"
               name="confirmPassword"
-              minLength="6"
               value = {confirmPassword}
               onChange = {term => onChange(term)}
             />
@@ -86,10 +97,21 @@ import PropTypes from 'prop-types';
           Already have an account? <a href="login.html">Sign In</a>
         </p>
     </Fragment>
-    )
+    );
 }; 
 
 Register.propTypes = {
-    setAlert: PropTypes.func.isRequired
-}
-export default connect(null,{setAlert})(Register); 
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+};
+
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+
+export default connect(mapStateToProps, 
+{setAlert, register}
+)(Register);
