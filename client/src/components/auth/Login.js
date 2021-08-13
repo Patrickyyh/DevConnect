@@ -33,7 +33,7 @@ import PropTypes from 'prop-types';
 
     // Redirect if logged in 
     if(props.isAuthenticated){
-      return <Redirect to ="/" /> 
+      return <Redirect to ="/dashboard" /> 
     }
 
     

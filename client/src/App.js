@@ -6,11 +6,17 @@ import {BrowserRouter as Router,Route,Switch,Link} from 'react-router-dom';
 import { Landing } from './components/layout/Landing';
 import Navbar from './components/layout/Navbar'; 
 import Login from './components/auth/Login';
+import Dashboard from './components/dashboard/Dashboard';
+import PrivateRoute from './components/routing/PrivateRoute';
+
 
 import Register from './components/auth/Register';
 import alert from './reducers/alert';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utills/setAuthToken';
+
+
+
 
 // Redux 
 import { Provider } from 'react-redux';
@@ -39,6 +45,7 @@ return(
                <Switch>
                    <Route exact path = "/register" component = {Register} />
                    <Route exact path = "/login" component = {Login} />
+                   <PrivateRoute exact path = "/dashboard" component = {Dashboard}/>
                </Switch>
            </section>
        </Fragment>

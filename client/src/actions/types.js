@@ -16,6 +16,10 @@ export const REMOVE_ALERT = 'REMOVE_ALERT'
  export const LOGIN_FAIL = 'LOGIN_FAIL'; 
  export const LOG_OUT = 'LOG_OUT';
  
+
+ // Profile
+ export const GET_PROFILE = "GET_PROFILE";
+ export const PROFILE_ERROR = "PROFILE_ERROR";
  
 
 
